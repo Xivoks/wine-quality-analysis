@@ -7,8 +7,8 @@ def create_plot(app):
         alcohol_means = [[] for _ in range(3)]
 
         for data in wine_data:
-            class_idx = round(data.Class) - 1
-            alcohol_means[class_idx].append(data.Alcohol)
+            class_idx = int(round(data.Class)) - 1
+            alcohol_means[class_idx].append(data.alcohol)
 
         class_labels = ['Class 1', 'Class 2', 'Class 3']
         means = [sum(alcohol) / len(alcohol) for alcohol in alcohol_means]
@@ -19,7 +19,7 @@ def create_plot(app):
         plt.ylabel('Średnia Zawartość Alkoholu')
         plt.title('Średnia Zawartość Alkoholu w Poszczególnych Klasach Wina')
 
-        chart_filename = 'static/chart1.png'
+        chart_filename = 'static/images/chart1.png'
         plt.savefig(chart_filename)
 
     return chart_filename
