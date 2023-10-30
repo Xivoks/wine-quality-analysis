@@ -1,4 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
+
+from charts import create_plot
 from config import DB_CONFIG
 from models.models import WineData
 from models.models import db
@@ -11,6 +13,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+@app.route('/')
+def default_route():
+    return "Hello"
 
 @app.route('/get_wine_data', methods=['GET'])
 def get_wine_data():
@@ -37,6 +42,10 @@ def get_wine_data():
 
     return jsonify({'wine_data': wine_data_list})
 
+@app.route('/chart1')
+def show_chart1():
+    chart_filename = create_plot(app)
+    return send_from_directory('static', 'chart1.png')
 
 if __name__ == '__main__':
     app.run(debug=True)
